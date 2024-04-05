@@ -25,8 +25,13 @@ public class WishList {
         addPresents();
         Collections.sort(presents);
         System.out.println(presents.toString());
-        writeList();
-        
+
+        try {
+            writeList();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private static void fetchList() throws FileNotFoundException {
@@ -40,16 +45,14 @@ public class WishList {
         }
     }
 
-    private static void writeList() {
-        try {
-            FileWriter fw = new FileWriter("xmaslist.txt");
-            for (Present present : presents) {
-                fw.write(present.toString() + "\n");
-            }
-            fw.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private static void writeList() throws IOException {
+
+        FileWriter fw = new FileWriter("xmaslist.txt");
+        for (Present present : presents) {
+            fw.write(present.toString() + "\n");
         }
+        fw.close();
+
     }
 
     private static void addPresents() {
